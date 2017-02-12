@@ -1,6 +1,7 @@
 import pickle
 import math
 from statistics import *
+from collections import Counter
 class Feature:
     def __init__(self, statFileName = 'doc_statistics'):
         self.stat = Statistics.load(statFileName)
@@ -47,6 +48,14 @@ class Feature:
             score *= (p1 + p2) ** (1.0 / len(title))
         return score
 
+    def cosSim(self, title, bodyId, body):
+        countTitle = Counter(title)
+        countBody = Counter(body)
+        intersect = set(title).intersection(body)
+        return sum([countTitle[w] * countBody[w] for w in intersect]) / (math.sqrt(sum([countTitle[w] ** 2 for w in countTitle.keys()])) * math.sqrt(sum([countBody[w] ** 2 for w in countBody.keys()])))
+
+    
+
 
 
 if __name__ == '__main__':
@@ -58,11 +67,15 @@ if __name__ == '__main__':
     bodyId = 154
     print feature.BM25(title, bodyId, body)
     print feature.Indri(title, bodyId, body)
+    print feature.cosSim(title, bodyId, body)
     bodyId = 155
     body = 'allegedly pulled strings get one customers fired job prestigious accounting firm complained billing issues false former comcast identified told story site whose readers named comcast worst company two years conal says trouble started erratic bills sometimes show charged equipment never activated actually customer service reps promised problems would instead things got significantly hellish october last according conal comcast sent nearly equipment never ordered want tried bill accountant trade problem documenting every billing error overcharge brought spreadsheet dropped unwanted dvrs modems even conal says able get money instead comcast sent collections conal made call allegedly cost per chose try going customer service help year subscriber instead contacted office spoke someone office promised conal would receive call back address describes callback rep identifying company calling starting help kept insisting technician shown appointment specify rep began asking color tried office let know rep sent way failed miserably considering even comcast acknowledges customer service experience broken could take years reform hardly blame customer understands corporate structures escalating comcast blame conal consumerist point shortly call someone comcast contacted partner firm discuss led ethics investigation subsequent dismissal job says received positive feedback reviews creepiest part although allegedly fired throwing around name powerful surprise happens business swears never told anyone comcast believes went extra mile look online contact comcast comcast confirmed least one part letter lawyer considering filing suit cable provider lawyer said company contact counsel says position complain firm came customer service seems arguing phone minutes trying talk paying fees know fradulent nowhere near worst thing comcast inflict apparently also wreck life ways nothing cable internet really looking forward comcast becoming basically cable provider consumerist'
     body = body.split(' ')
     print feature.BM25(title, bodyId, body)
     print feature.Indri(title, bodyId, body)
+    print feature.cosSim(title, bodyId, body)
+    
+
 
 
 
