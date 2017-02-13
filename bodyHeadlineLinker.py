@@ -37,6 +37,6 @@ def linker(id2body, fileName):
 if __name__ == '__main__':
 	print "indexing body..."
 	id2body = readFile("train_bodies_tokenized.csv")
-	print "combing body and headline..."
+	print "combing body and headline..." 
 	linker(id2body, "train_stances_tokenized.csv")
 	
