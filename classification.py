@@ -10,7 +10,7 @@ if __name__ == '__main__':
 	f = open(filename, 'r')
 	feature = Feature()
 	lines = f.readlines()
-	threshold = [20, 0.1, 0.1]
+	threshold = [20, 0.001, 0.1]
 	numFeatures = 3
 	for line in lines:
 		line = line.split(',')
