@@ -1,10 +1,10 @@
 import pickle
 import math
-from statistics import *
+from index import *
 from collections import Counter
 class Feature:
-    def __init__(self, statFileName = 'doc_statistics'):
-        self.stat = Statistics.load(statFileName)
+    def __init__(self, statFileName = 'index'):
+        self.stat = Index.load(statFileName)
 
     def BM25(self, title, bodyId, body, k1 = 1.2, b = 0.3):
         # title, body as list of tokenized words
