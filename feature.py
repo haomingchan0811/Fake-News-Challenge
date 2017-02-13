@@ -52,6 +52,8 @@ class Feature:
         countTitle = Counter(title)
         countBody = Counter(body)
         intersect = set(title).intersection(body)
+        if len(intersect) == 0:
+            return 0
         return sum([countTitle[w] * countBody[w] for w in intersect]) / (math.sqrt(sum([countTitle[w] ** 2 for w in countTitle.keys()])) * math.sqrt(sum([countBody[w] ** 2 for w in countBody.keys()])))
 
     

@@ -30,10 +30,8 @@ def cleanBodies(bodiesFileName,outputFileName):
         else:
             tmp = [i for i in ''.join(line).lower().split(' ') if i not in stop and i.isalpha()]
         lastBody += tmp
-            
-        
-        
     f.close()
+    output.write(lastId + ',' + ' '.join(lastBody) + '\n')
     output.close()
 
 

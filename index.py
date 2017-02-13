@@ -68,4 +68,4 @@ if __name__ == '__main__':
     print s.getDocLen(0)
     print s.getDocNum()
     print s.cf()
-    print s.getBody(4)
+    print s.getBody(2532)
