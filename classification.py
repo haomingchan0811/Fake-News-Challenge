@@ -34,7 +34,11 @@ if __name__ == '__main__':
 			if features[i] >= threshold[i]:
 				count += 1
 		if (count >= (numFeatures >> 1)):
-			print "Prediction: Related.\n"
+			print "Prediction: Related."
+			if related.startswith('un'):
+				for j in features:
+					print j
+				miss += 1
 			#continue
 		else:
 			print "Prediction: Unrelated."
