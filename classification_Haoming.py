@@ -8,12 +8,17 @@ from sklearn import svm
 from feature import *
 from collections import Counter
 
-def load_dataSet(fileName):
+def load_dataSet(fileName, isTest = False):
 	features = []
 	labels = []
+	ids = []
 	feature = Feature()
 	lines = (open(fileName, 'r')).readlines()
+	attributeLine = True  # first line of the file is the attribute names 
 	for line in lines:
+		if attributeLine:
+			attributeLine = False
+			continue
 		bodyId, headline, body, label = line.split(',')
 		headline = headline.split(' ')
 		body = body.split(' ')
@@ -24,9 +29,12 @@ def load_dataSet(fileName):
 		label = 0 if label.startswith('un') else 1
 		labels.append(label)
 		features.append([f_bm25, f_indri, f_cosSim])
+		ids.append(bodyId)
 
 		assert(len(labels) == len(features))
 
+	if isTest:
+		return np.array(labels), np.array(features), ids
 	return np.array(labels), np.array(features)
 
 def save_Result(prediction):
@@ -52,15 +60,20 @@ def svmClassify(trainFeature, trainLabel, testFeature, c, k):
 
 def classification():
 	trainLabel, trainFeature = load_dataSet('trainingSet.csv')
-	testLabel, testFeature = load_dataSet('testSet.csv')
+	testLabel, testFeature, ids = load_dataSet('testSet.csv', True)
 	result = svmClassify(trainFeature, trainLabel, testFeature, 5, 'rbf')
+
 	error = 0
-	num_test = testFeature.shape[0]
+	errorFile = open("error_id.txt", 'w')
+	num_test = testFeature.shape[0]	
 	for i in xrange(num_test):
 		if result[i] != testLabel[i]:
 			error += 1
+			errorFile.write("%s\n" % ids[i])
+
 	accuracy = (num_test - error) * 100.0 / num_test
 	print "#TestCase = %d, Accuracy = %.2f%%" % (num_test, accuracy)
+	print "#ErrorCase = %d, corresponding IDs saved to file 'error_id.txt'" % error
 
 if __name__ == '__main__':
 	classification()
