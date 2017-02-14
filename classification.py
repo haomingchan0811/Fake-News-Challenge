@@ -35,7 +35,7 @@ if __name__ == '__main__':
 				count += 1
 		if (count >= (numFeatures >> 1)):
 			print "Prediction: Related.\n"
-			continue
+			#continue
 		else:
 			print "Prediction: Unrelated."
 			if not related.startswith('un'):
