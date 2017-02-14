@@ -17,7 +17,9 @@ if __name__ == '__main__':
 	features = [0,0,0]
 	numFeatures = 3
 	miss = 0
+	total = 0
 	for line in lines:
+		total += 1
 		line = line.split(',')
 		title = line[0]
 		title = title.split(' ')
@@ -31,13 +33,20 @@ if __name__ == '__main__':
 		for i in range(numFeatures):
 			if features[i] >= threshold[i]:
 				count += 1
-		if (count > (numFeatures >> 1)):
+		if (count >= (numFeatures >> 1)):
 			print "Prediction: Related.\n"
+			continue
 		else:
-			print "Prediction: Unrelated.\n"
+			print "Prediction: Unrelated."
 			if not related.startswith('un'):
 				miss += 1
-		print "Standard realtion: " + related + "\n"
+				for j in features:
+					print j
+		print "Standard realtion: " + related
 		print "************"
-	print miss
+		
+	print "#Miss " + str(miss)
+	print "#Total " + str(total)
+	precision = 1 - float(miss) / total
+	print "Precision: " + str(precision)
 
