@@ -24,7 +24,6 @@ if __name__ == '__main__':
 		bodyId = line[0]
 		related = line[3]
 		body = line[2]
-		#body = s.getBody(bodyId)
 		body = body.split(' ')
 		features[0] = feature.BM25(title, bodyId, body)
 		features[1] = feature.Indri(title, bodyId, body)
