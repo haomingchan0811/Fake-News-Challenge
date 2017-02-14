@@ -16,12 +16,20 @@ def readFile(fileName):
 
 def linker(id2body, fileName):
 	trainingSet = []
+	testSet = []
 	with open(fileName, 'r') as f:
-		for line in f.readlines():
+		lines = f.readlines()
+		num_train = 0.9 * len(lines)  # split out held-out data 
+		currIdx = 0
+		for line in lines:
+			currIdx += 1		
 			headline, bodyId, label = line.strip().split(',')
 			try:
 				body = id2body[bodyId]
-				trainingSet.append([bodyId, headline, body, label])
+				if currIdx <= num_train:
+					trainingSet.append([bodyId, headline, body, label])
+				else:
+					testSet.append([bodyId, headline, body, label])
 			except:
 				print "KeyError: ", bodyId
 
@@ -31,7 +39,13 @@ def linker(id2body, fileName):
 		for dataPoint in trainingSet:
 			writer.writerow(dataPoint)
 
-	# return trainingSet
+	with open('testSet.csv', 'w') as f:
+		writer = csv.writer(f)
+		writer.writerow(['BodyId', 'Headline', 'Body', 'Label'])
+		for dataPoint in testSet:
+			writer.writerow(dataPoint)
+
+	# return trainingSet, testSet
 
 
 if __name__ == '__main__':
