@@ -1,4 +1,5 @@
-# Fake-News-Challenge
-Codes and related materials of the FNC contest
+# [Fake-News-Challenge](http://www.fakenewschallenge.org/) 
 
-This repository is for personal use only.
+Codes and related materials of the [FNC](http://www.fakenewschallenge.org/) contest
+
+**This repository is for personal use only.**
