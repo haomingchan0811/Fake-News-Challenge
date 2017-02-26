@@ -66,14 +66,29 @@ def classification():
 	error = 0
 	errorFile = open("error_id.txt", 'w')
 	num_test = testFeature.shape[0]	
+	[falsePositive, falseNegative, truePositive, trueNegative] = [0] * 4
 	for i in xrange(num_test):
 		if result[i] != testLabel[i]:
+			if result[i] == 1:
+				falsePositive += 1
+			else:
+				falseNegative += 1 
 			error += 1
 			errorFile.write("%s\n" % ids[i])
+		else:
+			if result[i] == 1:
+				truePositive += 1
+			else:
+				trueNegative += 1 
 
 	accuracy = (num_test - error) * 100.0 / num_test
-	print "#TestCase = %d, Accuracy = %.2f%%" % (num_test, accuracy)
-	print "#ErrorCase = %d, corresponding IDs saved to file 'error_id.txt'" % error
+	print "#True Positive = %d, #False Positive = %d" % (truePositive, falsePositive)
+	print "#True Negative = %d, #False Negative = %d" % (trueNegative, falseNegative)
+	print "#TestCase = %d, #ErrorCase = %d, corresponding IDs saved to file 'error_id.txt'" % (num_test, error)
+	precision = (truePositive * 100.0 / (truePositive + falsePositive))
+	recall = (truePositive * 100.0 / (truePositive + falseNegative))
+	f1 = (2 * (precision * recall) / (precision + recall))
+	print "Accuracy = %.2f%%, Precision = %.2f%%, Recall = %.2f%%, F1 Score = %.2f%%" % (accuracy, precision, recall, f1)
 
 if __name__ == '__main__':
 	classification()
