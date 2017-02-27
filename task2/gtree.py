@@ -45,9 +45,9 @@ def statistics(title,sen):
             pos = sen.index(syn) if syn in sverbs else -1
             if pos != -1:
                 noVerb = False
-                print pos
+                #print pos
                 for word in sen[max([0,pos-5]):min([len(sen),pos+5])]:
-                    print word
+                    #print word
                     if word in NEGATION:
                         count += 1
         for ant in getAntonyms(tverb):
