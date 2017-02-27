@@ -24,12 +24,12 @@ def cleanBodies(bodiesFileName,outputFileName):
         bodyid = line[0]
         if bodyid.isdigit():
             if lastId:
-                output.write(lastId + ',' + ' '.join(lastBody) + '\n')
+                output.write(lastId + ',' + ' '.join(lastBody).encode('utf-8') + '\n')
             lastBody = []
             lastId = bodyid
-            tmp = [i for i in ','.join(line[1:]).lower().split(' ') if i.isalnum()]
+            tmp = [i for i in nltk.word_tokenize(','.join(line[1:]).lower().decode('utf-8')) if i.isalnum()]
         else:
-            tmp = [i for i in ''.join(line).lower().split(' ') if i.isalnum()]
+            tmp = [i for i in nltk.word_tokenize(''.join(line[1:]).lower().decode('utf-8')) if i.isalnum()]
         lastBody += tmp
     f.close()
     output.write(lastId + ',' + ' '.join(lastBody) + '\n')
@@ -47,17 +47,16 @@ def tokenizeBodiesBySentence(bodiesFileName,outputFileName):
         if bodyid.isdigit():
             if lastId:
                 lastBody =  [[i for i in l if i.isalnum()] for l in lastBody]
-                output.write(lastId + ',' + '\t'.join([' '.join(i) for i in lastBody if sum([len(x) for x in i]) > 0]) + '\n')
+                output.write(lastId + ',' + u'\t'.join([' '.join(i) for i in lastBody if sum([len(x) for x in i]) > 0]).encode('utf-8') + '\n')
             lastBody = []
             lastId = bodyid
-            sents = ','.join(line[1:]).lower().split('.')
-
+            sents = [nltk.word_tokenize(sent.decode('utf-8')) for sent in ','.join(line[1:]).lower().split('.')]
         else:
-            sents = ''.join(line[1:]).lower().split('.')
-        lastBody += [i.split(' ') for i in sents]
+            sents = [nltk.word_tokenize(sent.decode('utf-8')) for sent in ''.join(line[1:]).lower().split('.')]
+        lastBody += sents
     f.close()
     lastBody =  [[i for i in l if i.isalnum()] for l in lastBody]
-    output.write(lastId + ',' + '\t'.join([' '.join(i) for i in lastBody if sum([len(x) for x in i]) > 0]) + '\n')
+    output.write(lastId + ',' + u'\t'.join([' '.join(i) for i in lastBody if sum([len(x) for x in i]) > 0]).encode('utf-8') + '\n')
     output.close()
 
 
@@ -87,5 +86,5 @@ def classification(stanceFileName, unrelatedFileName, agreeFileName, disagreeFil
 if __name__ == '__main__':
     tokenizeBodiesBySentence('train_bodies_cleaned.csv','train_bodies_tokenized_task2_sentence.csv')
     # cleanStances('train_stances_cleaned.csv','train_stances_tokenized_task2.csv')
-    # cleanBodies('train_bodies_cleaned.csv','train_bodies_tokenized_task2.csv')
+    cleanBodies('train_bodies_cleaned.csv','train_bodies_tokenized_task2.csv')
     # classification('train_stances_tokenized_task2.csv','unrelated_stances.csv','agree_stances.csv','disagree_stances.csv','discuss_stances.csv')
