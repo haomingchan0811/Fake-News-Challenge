@@ -134,12 +134,14 @@ if __name__ == '__main__':
                 #print 'C'
                 ag_dis += 1
                 #print ag_dis
+
         elif label.startswith('disagr'):
             #print 'D'
             if predict.startswith('a'):
                 #print 'E'
                 #print title
                 #print sens
+
                 dis_ag += 1
                 #print dis_ag
             else:
