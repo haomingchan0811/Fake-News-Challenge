@@ -20,7 +20,7 @@ Select the top K similar sentences in the body to the headline
 @param bodyId bodyID for this headline
 @param label label of this pair of headline and body
 @param k the number of most similar sentences to extract
-@return a list of top 
+@return a list of top K sentences 
 """
 def selectSents(headline, bodyId, label, k = 3):
 	# f = open('train_stances_tokenized_task2.csv', 'r')
@@ -40,7 +40,7 @@ def selectSents(headline, bodyId, label, k = 3):
 		scores[str_sent] = sent_similarity(headline, sentence)
 
 	top_sents = sorted(scores.iteritems(), key = lambda x:x[1], reverse = True)
-	print top_sents
+	top_sents = map(lambda (x,y): x, top_sents)
 
 	return top_sents[:3]
 
