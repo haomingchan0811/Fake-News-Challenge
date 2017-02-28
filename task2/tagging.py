@@ -2,7 +2,6 @@ from index import *
 from nltk.corpus import wordnet as wn
 from nltk.tokenize import *
 from nltk import pos_tag
-from extractSimSents import *
 
 NEGATION = ['no','not','none','nor','nobody','nothing','neither','nowhere','never','hardly','scarcely','barely']
 
@@ -116,8 +115,8 @@ if __name__ == '__main__':
         line = line.split(',')
         title = line[0]
         bodyId = line[1]
-        label = line[2]
-        sens = selectSents(title, bodyId, 'agree', 10)
+        label = line[2]     
+        sens = index.getBodySent(bodyId)
         #print sens
         predict = statistics(title,sens)
         

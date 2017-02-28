@@ -8,7 +8,8 @@ stopwords = set(stopwords.words('english'))
 index = Index.load('index_task2')
 
 # Load Google's pre-trained Word2Vec model.
-model = gensim.models.Word2Vec.load_word2vec_format('GoogleNews-vectors-negative300.bin', binary=True)
+#model = gensim.models.Word2Vec.load_word2vec_format('GoogleNews-vectors-negative300.bin', binary=True)
+model = gensim.models.KeyedVectors.load_word2vec_format('GoogleNews-vectors-negative300.bin', binary=True)
 print "word2vec model loading complete..."
 
 vocab = model.vocab.keys()
@@ -40,9 +41,14 @@ def selectSents(headline, bodyId, label, k = 3):
 		scores[str_sent] = sent_similarity(headline, sentence)
 
 	top_sents = sorted(scores.iteritems(), key = lambda x:x[1], reverse = True)
-	top_sents = map(lambda (x,y): x, top_sents)
 
-	return top_sents[:3]
+	#top_sents = map(lambda (x,y): x, top_sents)
+
+	#print top_sents
+	if len(top_sents) < k:
+		return top_sents
+	else:
+		return top_sents[:k]
 
 
 """
@@ -102,4 +108,4 @@ def cosSim(vec1, vec2):
 if __name__ == '__main__':
 	headline = "hundreds of palestinians flee floods in gaza as israel opens dams"
 	bodyId = 158
-	selectSents(headline, bodyId, 'agree')
+	selectSents(headline, bodyId, 'agree', 10)
