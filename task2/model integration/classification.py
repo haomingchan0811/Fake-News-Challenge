@@ -8,6 +8,7 @@ from sklearn import svm
 from collections import Counter
 
 labelDict = {"discuss": 0, "agree":1, "disagree":2}
+reverseLabelDict = {0:"discuss", 1:"agree", 2:"disagree"}
 
 def load_dataSet(f_clfProb, f_ruleBased):
 	features = []
@@ -49,10 +50,16 @@ def classification():
 	testLabel, testFeature = load_dataSet('test_3scores', 'test_gtree.csv')	
 	result = svmClassify(trainFeature, trainLabel, testFeature, 5, 'rbf')
 
+	f_gold = csv.writer(open("goldLabel.csv", "w"))
+	f_predict = csv.writer(open("predictLabel.csv", "w"))
+
 	error = 0
 	num_test = testFeature.shape[0]	
 	[falsePositive, falseNegative, truePositive, trueNegative] = [0] * 4
 	for i in xrange(num_test):
+		f_predict.writerow([reverseLabelDict[result[i]]])
+		f_gold.writerow([reverseLabelDict[testLabel[i]]])
+
 		if result[i] != testLabel[i]:
 			if result[i] == 1:
 				falsePositive += 1

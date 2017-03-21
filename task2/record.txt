@@ -1,0 +1,62 @@
+disagree: {'disagree': 374, 'agree': 466}
+agree: {'disagree': 1118, 'agree': 2560}
+
+k=1
+ag_ag: 1992
+ag_dis: 939
+dis_ag: 408
+dis_dis: 273
+Precison: 0.679631525077
+Recall: 0.83
+F1: 0.747326955543
+Accuracy: 0.62707641196
+
+k=3
+ag_ag: 2025
+ag_dis: 906
+dis_ag: 380
+dis_dis: 301
+Precison: 0.690890481064
+Recall: 0.841995841996
+F1: 0.758995502249
+Accuracy: 0.643964562569
+
+k=5
+ag_ag: 1957
+ag_dis: 974
+dis_ag: 360
+dis_dis: 321
+Precison: 0.66769020812
+Recall: 0.844626672421
+F1: 0.745807926829
+Accuracy: 0.630675526024
+
+k=10
+ag_ag: 1875
+ag_dis: 1056
+dis_ag: 340
+dis_dis: 341
+Precison: 0.639713408393
+Recall: 0.846501128668
+F1: 0.728721336961
+Accuracy: 0.613510520487
+
+All1
+ag_ag: 2581
+ag_dis: 350
+dis_ag: 7429
+dis_dis: 381
+Precison: 0.880586830433
+Recall: 0.257842157842
+F1: 0.398887257554
+Accuracy: 0.275765757378
+
+All2
+ag_ag: 342
+ag_dis: 2589
+dis_ag: 1169
+dis_dis: 6641
+Precison: 0.116683725691
+Recall: 0.226340172071
+F1: 0.15398469158
+Accuracy: 0.650125686621
